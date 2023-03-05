@@ -1,10 +1,13 @@
-D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.exe
-D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.dll
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.csproj.AssemblyReference.cache
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\MainWindow.g.cs
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\App.g.cs
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment_MarkupCompile.cache
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment_MarkupCompile.lref
+D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.exe
+D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.deps.json
+D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.runtimeconfig.json
+D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.dll
+D:\TechnicalAssignment\bin\Debug\net6.0-windows\TechnicalAssignment.pdb
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\MainWindow.baml
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.g.resources
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.GeneratedMSBuildEditorConfig.editorconfig
@@ -14,3 +17,5 @@ D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.csproj.CoreC
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.dll
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\refint\TechnicalAssignment.dll
 D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.pdb
+D:\TechnicalAssignment\obj\Debug\net6.0-windows\TechnicalAssignment.genruntimeconfig.cache
+D:\TechnicalAssignment\obj\Debug\net6.0-windows\ref\TechnicalAssignment.dll
