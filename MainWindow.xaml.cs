@@ -41,6 +41,11 @@ namespace TechnicalAssignment
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void AddRectangle(object sender, MouseButtonEventArgs e)
         {
             customColor = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 255)));
