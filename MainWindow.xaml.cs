@@ -21,6 +21,9 @@ namespace TechnicalAssignment
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Brush customColor;
+        Random r = new Random();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +41,33 @@ namespace TechnicalAssignment
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
+        private void AddRectangle(object sender, MouseButtonEventArgs e)
+        {
+            customColor = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 255)));
+            Rectangle newRectangle = new Rectangle
+            {
+                Width = 50,
+                Height = 50,
+                Fill = customColor,
+                StrokeThickness = 3,
+                Stroke = Brushes.Black
+            };
 
+            Canvas.SetLeft(newRectangle, Mouse.GetPosition(cnvImage).X);
+            Canvas.SetTop(newRectangle, Mouse.GetPosition(cnvImage).Y);
+
+            cnvImage.Children.Add(newRectangle);
+
+
+        }
+
+        private void RemoveRectangle(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is Rectangle)
+            {
+                Rectangle activeRectangle = (Rectangle)e.OriginalSource;
+                cnvImage.Children.Remove(activeRectangle);
+            }
+        }
     }
 }
