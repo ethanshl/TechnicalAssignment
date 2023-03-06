@@ -15,7 +15,7 @@
             
         </Grid>
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="20">
-            <Canvas Name="cnvImage" Height="300" Width="400" MouseLeftButtonDown="AddRectangle" MouseRightButtonDown="RemoveRectangle" MouseMove="Canvas_MouseMove" MouseUp="Canvas_MouseUp">
+            <Canvas Name="cnvImage" Height="300" Width="400" MouseLeftButtonDown="canvasMouseDown"  MouseMove="canvasMouseMove" MouseUp="canvasMouseUp">
                 <Image Name="imgPhoto" Height="300" Width="400"
                 Stretch="Fill"  Focusable="True"
                 />
