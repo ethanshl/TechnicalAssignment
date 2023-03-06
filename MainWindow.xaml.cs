@@ -26,11 +26,15 @@ namespace TechnicalAssignment
         Brush customColor;
         Random r = new Random();
         private Point startPoint;
+        Point offset;
         private Rectangle rect;
+        UIElement dragObj = null;
+
         public MainWindow()
         {
             InitializeComponent();
         }
+ 
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
@@ -71,22 +75,29 @@ namespace TechnicalAssignment
         private void AddRectangle(object sender, MouseButtonEventArgs e)
         {
             customColor = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 255)));
-            startPoint = e.GetPosition(cnvImage);
-            rect = new Rectangle
-            {
-                Width = 50,
-                Height = 50,
-                Fill = customColor,
-                StrokeThickness = 3,
-                Stroke = Brushes.Black
-            };
 
-            Canvas.SetLeft(rect, Mouse.GetPosition(cnvImage).X);
-            Canvas.SetTop(rect, Mouse.GetPosition(cnvImage).Y);
+                startPoint = e.GetPosition(cnvImage);
+                rect = new Rectangle
+                {                    
+                    Fill = customColor,
+                    StrokeThickness = 3,
+                    Stroke = Brushes.Black
+                };
 
-            cnvImage.Children.Add(rect);
+                Canvas.SetLeft(rect, Mouse.GetPosition(cnvImage).X);
+                Canvas.SetTop(rect, Mouse.GetPosition(cnvImage).Y);
+                rect.PreviewMouseLeftButtonDown += rectPreviewMouseLeftButtonDown;
+                cnvImage.Children.Add(rect);
 
+            
 
+        }
+        private void rectPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            this.dragObj = sender as UIElement;
+            this.offset = e.GetPosition(cnvImage);
+            this.offset.X -= Canvas.GetTop(this.dragObj);
+            this.offset.Y -= Canvas.GetLeft(this.dragObj);
+            this.cnvImage.CaptureMouse();
         }
 
         private void RemoveRectangle(object sender, MouseButtonEventArgs e)
@@ -102,7 +113,8 @@ namespace TechnicalAssignment
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Released || rect == null)
+
+            if (e.LeftButton == MouseButtonState.Released || rect == null || this.dragObj == null)
                 return;
 
             var pos = e.GetPosition(cnvImage);
@@ -118,11 +130,20 @@ namespace TechnicalAssignment
 
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
+
+            if (this.dragObj == null)
+                return;
+            var pos2 = e.GetPosition(sender as IInputElement);
+            Canvas.SetLeft(this.dragObj, pos2.X - this.offset.X);
+            Canvas.SetTop(this.dragObj,pos2.Y - this.offset.Y);
+            
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             rect = null;
+            this.dragObj = null;
+            this.cnvImage.ReleaseMouseCapture();
         }
     }
 }
