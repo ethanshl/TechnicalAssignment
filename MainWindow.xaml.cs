@@ -19,14 +19,14 @@ using System.Windows.Shapes;
 namespace TechnicalAssignment
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Tasks 1,2,3,6,7,and 8 completed
     /// </summary>
     public partial class MainWindow : Window
     {
         Brush customColor;
         Random r = new Random();
         private Point startPoint;
-        Point offset;
+        private Point offset;
         private Rectangle rect;
         UIElement dragObj = null;
 
@@ -35,7 +35,7 @@ namespace TechnicalAssignment
             InitializeComponent();
         }
  
-
+        //Click the Open button to upload your image.
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -48,26 +48,37 @@ namespace TechnicalAssignment
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
+
+        //Click the Save button and save the image and drawing.
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Rect rect = new Rect(cnvImage.RenderSize);
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)rect.Right,
                 (int)rect.Bottom, 96d, 96d, System.Windows.Media.PixelFormats.Default);
             rtb.Render(cnvImage);
-            var saveFileDialog = new SaveFileDialog()
+            try
             {
-                Filter = "Image Files (*.bmp, *.png, *.jpg)|*.bmp;*.png;*.jpg"
-            };
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                BitmapEncoder pngEncoder = new PngBitmapEncoder();
-                pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+                var saveFileDialog = new SaveFileDialog()
+                {
+                    Filter = "Image Files (*.bmp, *.png, *.jpg)|*.bmp;*.png;*.jpg"
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                    pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
 
-                using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
-                    pngEncoder.Save(stream);
+                    using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                        pngEncoder.Save(stream);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
             }
         }
 
+        //Single mouse1 click to delete a reactangle; 
+        //Click mouse1 and drag to create and resize the rectangle.
         private void canvasMouseDown(object sender, MouseButtonEventArgs e)
         {
             customColor = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 255)));
@@ -88,12 +99,14 @@ namespace TechnicalAssignment
 
                 Canvas.SetLeft(rect, Mouse.GetPosition(cnvImage).X);
                 Canvas.SetTop(rect, Mouse.GetPosition(cnvImage).Y);
-                rect.PreviewMouseRightButtonDown += rectPreviewMouseLeftButtonDown;
+                rect.PreviewMouseRightButtonDown += rectPreviewMouseRightButtonDown;
                 cnvImage.Children.Add(rect);
 
             }
         }
-        private void rectPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+
+        //Click mouse2 to select the rectangle you want to reposition.
+        private void rectPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             this.dragObj = sender as UIElement;
             this.offset = e.GetPosition(cnvImage);
             this.offset.X -= Canvas.GetTop(this.dragObj);
@@ -101,7 +114,7 @@ namespace TechnicalAssignment
             this.cnvImage.CaptureMouse();
         }
 
-
+        //cnvMouseMove event to handle rectangle resizing and repositioning.
         private void canvasMouseMove(object sender, MouseEventArgs e)
         {
             if (rect != null)
@@ -129,7 +142,7 @@ namespace TechnicalAssignment
  
 
         }
-
+        //Complete the process of rectangle creation and reposition.
         private void canvasMouseUp(object sender, MouseButtonEventArgs e)
         {
             rect = null;
