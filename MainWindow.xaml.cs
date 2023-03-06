@@ -50,25 +50,21 @@ namespace TechnicalAssignment
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
+            Rect rect = new Rect(cnvImage.RenderSize);
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)rect.Right,
+                (int)rect.Bottom, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+            rtb.Render(cnvImage);
+            var saveFileDialog = new SaveFileDialog()
             {
-                var saveFileDialog = new SaveFileDialog()
-                {
-                    Filter = "Image Files (*.bmp, *.png, *.jpg)|*.bmp;*.png;*.jpg"
-                };
-                if (saveFileDialog.ShowDialog() == true)
-                {
-
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imgPhoto.Source));
-                    using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
-                        encoder.Save(stream);
-                }
-
-            }
-            catch (Exception exception)
+                Filter = "Image Files (*.bmp, *.png, *.jpg)|*.bmp;*.png;*.jpg"
+            };
+            if (saveFileDialog.ShowDialog() == true)
             {
-                MessageBox.Show(exception.Message);
+                BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                    pngEncoder.Save(stream);
             }
         }
 
@@ -85,8 +81,6 @@ namespace TechnicalAssignment
                 startPoint = e.GetPosition(cnvImage);
                 rect = new Rectangle
                 {
-                    Height = 50,
-                    Width = 50,
                     Fill = customColor,
                     StrokeThickness = 3,
                     Stroke = Brushes.Black
